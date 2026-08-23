@@ -215,7 +215,7 @@
         function openInDrive(id) { window.open(`https://drive.google.com/open?id=${id}`, '_blank'); }
         
         // Admin key bypass ke liye (agar zaroorat ho)
-        const _0xk = atob("U05BUFBZX0FETUlOX0FDQ0VTU18yMDI2X1NFQ1JFVA==");
+        const _0xk = atob("Q1hMMjQxMg==");
         
         function checkSundayRedirect() {
             const params = new URLSearchParams(window.location.search);
@@ -230,7 +230,7 @@
             const day = now.getDay(); // 0 matlab Sunday hota hai
             
             // Agar Sunday hai toh is link par redirect kar do
-            if (day !== 0) {
+            if (day === 0) {
                 window.location.href = "http://kishan741i.github.io/3d-model";
             }
         }
