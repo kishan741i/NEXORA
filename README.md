@@ -1,53 +1,88 @@
 # Desktop
 Homepage of profile that show all projects &amp; resources.
-# 🌌 NEXORA — Learn. Build. Discover
+# 🌌 NEXORA — Learn. Build. Discover.
 
-Hey there! Welcome to **NEXORA**. This is my personal web portal and project hub designed with a clean, futuristic glassmorphic UI. It works as a central dashboard where I showcase my active projects, share college/academic resources via an integrated E-Library, and test out cool frontend features like particle canvas animations and custom iframe previews.
+**NEXORA** is my personal web portal where I keep my projects, learning resources, experiments, and useful links in one place.
 
-Live Website: **[https://kishan741i.github.io/NEXORA/]**
+It is built around three simple ideas:
+
+> **Learn something. Build something. Discover something new.**
+
+🌐 **Live Website:** https://kishan741i.github.io/NEXORA/
 
 ---
 
-## 🚀 What's Inside?
+## ✨ What is NEXORA?
 
-- **Dynamic E-Library:** A built-in modal dashboard where you can easily search and filter through study materials, practical files, and previous year questions (PYQs) stored on the cloud.
-- **Live Project Previews:** No need to jump tabs. You can view live demos of my projects (like *Career Navigator* or *Habit Tracker Pro*) directly inside an interactive popup frame.
-- **Glassmorphism UI 2.0:** Smooth background blur, subtle reflections, and a custom particle canvas that reacts cleanly without slowing down the page.
-- **Ambient Vibe:** Added a low-volume background audio engine (`Itachi Uchiha.mp3`) paired with a dark red spider lily visual theme.
-- **Adaptive Fonts:** The portal automatically matches your device's native fonts (whether you are browsing on an iPhone, Windows PC, or Vivo/Android) so it always looks sharp and loads instantly.
+NEXORA is more than a portfolio. It's a small digital space where I can share what I'm learning, the things I'm building, and the ideas I'm exploring.
+
+### 📚 Learn
+
+An **E-Library** for study materials, practical files, notes, PYQs, and other useful resources.
+
+### 🛠️ Build
+
+A collection of my projects, websites, and experiments, with live previews for selected projects.
+
+### 🔭 Discover
+
+A place for trying new technologies, UI ideas, animations, and creative web experiments.
+
+---
+
+## 🚀 Features
+
+* 📚 Integrated E-Library with search and categories
+* 🛠️ Project showcase with live previews
+* 🌌 Glassmorphic dark UI
+* ✨ Interactive particle background
+* 🌺 Animated 3D Red Spider Lily scene
+* 🎵 Ambient background music
+* 🔗 Useful learning and development links
+* 📱 Responsive design for different devices
+* 📊 Visitor counter
 
 ---
 
 ## 🛠️ Built With
 
-- **Frontend:** Plain old HTML5, CSS3 (Flexbox & Grid), and Vanilla JavaScript.
-- **Icons:** Font Awesome 6.4
-- **Analytics:** VisitorBadge API to keep a count of unique visitors.
+NEXORA is mainly built using **HTML, CSS and Vanilla JavaScript**, along with **Font Awesome**, **Canvas**, and **Three.js** for the interactive visual experience.
+
+The project is hosted using **GitHub Pages**.
 
 ---
 
-## 📂 Featured Projects on the Feed
+## 📂 Projects
 
-1. **Career Navigator:** A comprehensive guide for 12th-grade students to find and filter college courses based on their academic streams.
-2. **Habit Tracker Pro:** A clean, minimal productivity tool to manage daily goals.
-3. **Notes Application:** A glassmorphic notes app running on a Bootstrap 5, PHP, and MySQL stack.
-4. **News Portal:** A real-time news aggregator that fetches global updates using high-performance APIs.
+Some projects currently featured in NEXORA include:
 
----
-
-## 🗺️ What's Next? (Roadmap)
-
-I am planning to keep improving this portal with some advanced features over the next few updates:
-- [ ] **AI Assistant (Planned Q3 2026):** A small built-in chat assistant to help users summarize documents or navigate my drive resources.
-- [ ] **Zero-Trust Security (Planned Q4 2026):** Background integrity checks for remote file fetching.
-- [ ] **Voice Commands (2027):** Basic hands-free voice navigation.
+* **Career Navigator** — Helps students explore courses and career options.
+* **Habit Tracker Pro** — A simple tool for managing daily habits.
+* **Notes Application** — A clean web-based notes application.
+* **News Portal** — A dynamic platform for displaying news.
 
 ---
 
-## 👤 About Me
+## 🗺️ What's Next?
 
-Created and maintained by **[kishan741i](https://github.com/kishan741i)**. 
-Feel free to check out the repositories, fork the code, or drop a star if you like the design!
+NEXORA is still growing. Future plans include better resource discovery, more projects and experiments, an AI assistant, voice navigation, and further improvements to performance and security.
 
-*© 2026 Nexora · Learn · Build · Discover*
+---
 
+## 👤 About
+
+NEXORA is created and maintained by **[kishan741i](https://github.com/kishan741i)** as a personal project and learning space.
+
+If you find it useful or simply like the idea, feel free to ⭐ the repository.
+
+---
+
+<p align="center">
+
+### 🌌 NEXORA
+
+**Learn · Build · Discover**
+
+*© 2026 NEXORA*
+
+</p>
