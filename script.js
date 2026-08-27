@@ -322,3 +322,44 @@
             requestAnimationFrame(animateParticles);
         }
         animateParticles();
+
+        document.addEventListener("DOMContentLoaded", () => {
+        const bgWrapper = document.getElementById("dynamic-bg-wrapper");
+
+        // 1. Apne videos ki list yahan set karein (Aap jitne chahein utne mp4/webm add kar sakte hain)
+        const videoPlaylist = [
+            "./14683967_3840_2160_30fps.mp4",
+            "./187144-879640397.mp4",
+            "./public_blackhole.webm",
+            "./public_cards-video.webm",
+            "./public_encryption.webm"
+        ];
+
+        // 2. LocalStorage se pichla index nikalna (Pehli baar open karne par 0 set hoga)
+        let currentIndex = parseInt(localStorage.getItem("bgSequenceIndex")) || 0;
+
+        // Total items = Videos + 1 (Iframe ke liye)
+        const totalItems = videoPlaylist.length + 1; 
+
+        // 3. Logic Check: Kya is baar iframe load karne ki baari hai?
+        if (currentIndex === videoPlaylist.length) {
+            // Last element: Iframe load hoga
+            bgWrapper.innerHTML = `
+            <iframe src="./red-spider-lily-flower.html"></iframe>
+            `;
+            
+            // Agle refresh par loop ko wapas 0 (Pehle video) par lane ke liye
+            localStorage.setItem("bgSequenceIndex", 0);
+        } else {
+            // Normal Flow: Video load hoga
+            const currentVideoSrc = videoPlaylist[currentIndex];
+            bgWrapper.innerHTML = `
+            <video autoplay muted loop playsinline>
+                <source src="${currentVideoSrc}" type="video/mp4">
+            </video>
+            `;
+            
+            // Index ko +1 badhana taaki agle reload par next video aaye
+            localStorage.setItem("bgSequenceIndex", currentIndex + 1);
+        }
+        });
