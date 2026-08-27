@@ -46,7 +46,7 @@ I am planning to keep improving this portal with some advanced features over the
 
 ## 👤 About Me
 
-Created and maintained by **[kishan741i](https://github.com)**. 
+Created and maintained by **[kishan741i](https://github.com/kishan741i)**. 
 Feel free to check out the repositories, fork the code, or drop a star if you like the design!
 
 *© 2026 Nexora · Learn · Build · Discover*
