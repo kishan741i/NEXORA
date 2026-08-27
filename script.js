@@ -1,3 +1,25 @@
+    const audio = document.getElementById('bgAudio');
+    audio.volume = 0.01; // 1% Volume
+
+    // Music play karne ka function jo user ki kisi bhi activity par chalega
+    function triggerMusic() {
+        audio.play().then(() => {
+            // Ek baar gaana shuru hone ke baad saare event listeners hata do taaki baar-baar play na ho
+            window.removeEventListener('click', triggerMusic);
+            window.removeEventListener('touchstart', triggerMusic);
+            window.removeEventListener('scroll', triggerMusic);
+            window.removeEventListener('keydown', triggerMusic);
+        }).catch(err => {
+            // Browser policy ki wajah se agar block hua toh silently ignore karega
+        });
+    }
+
+    // User ke click, touch, scroll ya keypress karte hi music chalu ho jayega
+    window.addEventListener('click', triggerMusic);
+    window.addEventListener('touchstart', triggerMusic);
+    window.addEventListener('scroll', triggerMusic);
+    window.addEventListener('keydown', triggerMusic);
+    
     // Browser ke default scroll restoration ko manual kar dete hain
     if ('scrollRestoration' in history) {
         history.scrollRestoration = 'manual';
