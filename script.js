@@ -328,10 +328,6 @@
 
         // 1. Apne videos ki list yahan set karein (Aap jitne chahein utne mp4/webm add kar sakte hain)
         const videoPlaylist = [
-            "./14683967_3840_2160_30fps.mp4",
-            "./187144-879640397.mp4",
-            "./public_blackhole.webm",
-            "./public_cards-video.webm",
             "./public_encryption.webm"
         ];
 
