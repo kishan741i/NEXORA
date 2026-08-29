@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="gu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Career Navigator</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #00f2ff;
+            --secondary: #7000ff;
+            --bg: #050505;
+            --surface: #0f111a;
+            --glass: rgba(255, 255, 255, 0.03);
+            --border: rgba(255, 255, 255, 0.08);
+            --text: #e2e8f0;
+            --text-dim: #94a3b8;
+        }
+
+        * {
+            margin: 0; padding: 0; box-sizing: border-box;
+            font-family: 'Outfit', 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background-image: 
+                radial-gradient(circle at 0% 0%, rgba(0, 242, 255, 0.05) 0%, transparent 40%),
+                radial-gradient(circle at 100% 100%, rgba(112, 0, 255, 0.05) 0%, transparent 40%);
+        }
+
+        /* --- DASHBOARD HEADER --- */
+        .top-bar {
+            padding: 40px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            border-bottom: 1px solid var(--border);
+            background: linear-gradient(to bottom, #0a0a0a, transparent);
+        }
+
+        .brand-zone h1 {
+            font-size: 2.8rem;
+            font-weight: 800;
+            letter-spacing: -2px;
+            color: #fff;
+        }
+
+        .brand-zone h1 span {
+            color: var(--primary);
+            text-shadow: 0 0 20px rgba(0, 242, 255, 0.4);
+        }
+
+        .brand-zone p {
+            color: var(--text-dim);
+            font-size: 0.9rem;
+            margin-top: 8px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .search-wrapper {
+            position: relative;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        #courseSearch {
+            width: 100%;
+            padding: 14px 20px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            color: white;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        #courseSearch:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 25px rgba(0, 242, 255, 0.1);
+        }
+
+        /* --- NAVIGATION --- */
+        .filter-nav {
+            padding: 30px 5% 10px;
+            display: flex;
+            gap: 12px;
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
+
+        .filter-nav::-webkit-scrollbar { display: none; }
+
+        .chip {
+            padding: 10px 22px;
+            background: var(--glass);
+            border: 1px solid var(--border);
+            color: var(--text-dim);
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.85rem;
+            white-space: nowrap;
+            transition: 0.3s;
+        }
+
+        .chip.active {
+            background: var(--primary);
+            color: #000;
+            border-color: var(--primary);
+        }
+
+        /* --- SYSTEM STATUS INDICATOR --- */
+        .stats-info {
+            padding: 15px 5%;
+            font-size: 0.8rem;
+            color: var(--primary);
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        /* --- GRID --- */
+        .main-grid {
+            flex: 1;
+            padding: 0 5% 80px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .digital-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 25px;
+            transition: 0.3s ease;
+            position: relative;
+        }
+
+        .digital-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+            background: #111420;
+        }
+
+        .card-cat {
+            font-size: 0.65rem;
+            font-weight: 800;
+            color: var(--primary);
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            letter-spacing: 1.5px;
+        }
+
+        .digital-card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 10px;
+            color: #fff;
+        }
+
+        .digital-card p {
+            color: var(--text-dim);
+            font-size: 0.9rem;
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+
+        .card-footer {
+            padding-top: 15px;
+            border-top: 1px solid var(--border);
+            color: var(--text-dim);
+            font-size: 0.8rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* --- FLOATING SCROLL BUTTON --- */
+        #scrollTopBtn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: var(--primary);
+            color: #000;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            box-shadow: 0 10px 25px rgba(0, 242, 255, 0.3);
+            z-index: 1000;
+            transition: 0.3s;
+        }
+
+        #scrollTopBtn:hover {
+            transform: scale(1.1);
+            background: #fff;
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            padding: 40px;
+            text-align: center;
+            border-top: 1px solid var(--border);
+            background: #080808;
+        }
+
+        @media (max-width: 768px) {
+            .top-bar { flex-direction: column; align-items: flex-start; gap: 20px; }
+            .brand-zone h1 { font-size: 2rem; }
+            .search-wrapper { max-width: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="top-bar">
+        <div class="brand-zone">
+            <h1>Career <span>Navigator</span></h1>
+            <p>Digital Future Analysis</p>
+        </div>
+        <div class="search-wrapper">
+            <input type="text" id="courseSearch" placeholder="Search courses...">
+        </div>
+    </div>
+
+    <div class="filter-nav">
+        <button class="chip active" data-cat="all">All Paths</button>
+        <button class="chip" data-cat="Science IT">Science IT</button>
+        <button class="chip" data-cat="Science Medical">Medical</button>
+        <button class="chip" data-cat="Science Engineering">Engineering</button>
+        <button class="chip" data-cat="Commerce">Commerce</button>
+        <button class="chip" data-cat="Arts">Arts</button>
+        <button class="chip" data-cat="Design">Design</button>
+        <button class="chip" data-cat="Government">Government</button>
+    </div>
+
+    <div class="stats-info" id="statusCount">[ SYSTEM READY ]</div>
+
+    <div class="main-grid" id="courseContainer"></div>
+
+    <button id="scrollTopBtn" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <footer>
+        <p style="color: var(--text-dim); font-size: 0.9rem;">
+            Powered by <span style="color: var(--primary); font-weight: 800;">Cloud 9 Digital</span>
+        </p>
+    </footer>
+
+    <script>
+        const courses = [
+    // --- Core IT & Degree Courses ---
+    { title: "BCA (Computer Applications)", cat: "Science IT", dur: "3 Years", desc: "Software development aur programming languages ki basic se advanced knowledge." },
+    { title: "B.Sc. IT (Information Technology)", cat: "Science IT", dur: "3 Years", desc: "Data management, networking, aur software applications par focus." },
+    { title: "B.Sc. CS (Computer Science)", cat: "Science IT", dur: "3 Years", desc: "Computing theory, mathematical algorithms, aur logic building par base course." },
+    { title: "B.E./B.Tech Computer Engineering", cat: "Science IT", dur: "4 Years", desc: "Hardware design aur complex software systems ka deep technical study." },
+    { title: "B.E./B.Tech Information Technology", cat: "Science IT", dur: "4 Years", desc: "Business processes aur networking technology ko implement karne ka engineering course." },
+    
+    // --- Specialized & Emerging Fields ---
+    { title: "B.Tech Data Science", cat: "Science IT", dur: "4 Years", desc: "Big data analysis, statistics, aur data-driven decision making ki field." },
+    { title: "B.Tech AI & Machine Learning", cat: "Science IT", dur: "4 Years", desc: "Intelligent systems aur self-learning algorithms develop karne ki study." },
+    { title: "B.Tech Cybersecurity", cat: "Science IT", dur: "4 Years", desc: "Digital assets ko hacking aur cyber threats se protect karne ki field." },
+    { title: "B.Tech Cloud Computing", cat: "Science IT", dur: "4 Years", desc: "Virtual servers aur remote data storage infrastructure management." },
+    { title: "B.Sc. Forensic Science (Cyber)", cat: "Science IT", dur: "3 Years", desc: "Cyber crimes ki investigation aur digital evidence collect karne ki field." },
+    { title: "B.Des UI/UX Design", cat: "Science IT", dur: "4 Years", desc: "Websites aur apps ka user interface aur experience design karna." },
+    
+    // --- Multimedia & Creative IT ---
+    { title: "B.Sc. Animation & Multimedia", cat: "Science IT", dur: "3 Years", desc: "2D/3D animation, visual effects (VFX), aur digital storytelling." },
+    { title: "B.Sc. Gaming & Mobile App Dev", cat: "Science IT", dur: "3 Years", desc: "Video games aur mobile platforms ke liye software build karna." },
+    { title: "B.Voc (Web Technologies)", cat: "Science IT", dur: "3 Years", desc: "Practical skill-based degree jo modern web development par focus karti hai." },
+    
+    // --- Short-term & Diploma Options ---
+    { title: "Diploma in CS Engineering", cat: "Science IT", dur: "3 Years", desc: "10th/12th ke baad direct practical engineering basics." },
+    { title: "DCA (Computer Applications)", cat: "Science IT", dur: "1 Year", desc: "Basic office automation aur computer operations ka short course." },
+    { title: "Diploma in IT Infrastructure", cat: "Science IT", dur: "1-2 Years", desc: "Hardware maintenance aur networking services ki vocational training." },
+
+    // --- Clinical & Medical Degrees (Mainstream) ---
+    { title: "MBBS (Medicine & Surgery)", cat: "Science Medical", dur: "5.5 Years", desc: "Allopathic medicine aur surgery ke liye primary medical degree." },
+    { title: "BDS (Dental Surgery)", cat: "Science Medical", dur: "5 Years", desc: "Daanto aur oral health ki treatment aur surgery." },
+    { title: "BAMS (Ayurveda)", cat: "Science Medical", dur: "5.5 Years", desc: "Ayurvedic dawayon aur ancient healing methods ki padhai." },
+    { title: "BHMS (Homeopathy)", cat: "Science Medical", dur: "5.5 Years", desc: "Homeopathic system aur natural healing par focus." },
+    { title: "BUMS (Unani Medicine)", cat: "Science Medical", dur: "5.5 Years", desc: "Unani medical system aur herbal treatment ki degree." },
+    { title: "BNYS (Naturopathy & Yoga)", cat: "Science Medical", dur: "5.5 Years", desc: "Bina dawayon ke yoga aur natural ways se ilaaj karna." },
+    { title: "BVSc & AH (Veterinary Science)", cat: "Science Medical", dur: "5.5 Years", desc: "Jaanwaron ki bimariyon ka ilaaj aur unki health management." },
+    
+    // --- Allied Health & Paramedical (Professional) ---
+    { title: "B.PT (Physiotherapy)", cat: "Science Medical", dur: "4.5 Years", desc: "Exercise aur physical therapy se injuries aur movement theek karna." },
+    { title: "B.Pharm (Pharmacy)", cat: "Science Medical", dur: "4 Years", desc: "Dawayon ki manufacturing, dosage, aur chemicals ki research." },
+    { title: "B.Sc. Nursing", cat: "Science Medical", dur: "4 Years", desc: "Patients ki care, hospital management, aur doctors ki assist karna." },
+    { title: "B.OT (Occupational Theory)", cat: "Science Medical", dur: "4 Years", desc: "Disability wale logo ko unke daily kaam karne mein madad karna." },
+    { title: "B.ASLP (Audiology & Speech)", cat: "Science Medical", dur: "4 Years", desc: "Sun-ne aur bolne ki disorders ka diagnosis aur ilaaj." },
+    { title: "B.Optom (Optometry)", cat: "Science Medical", dur: "4 Years", desc: "Aankhon ki vision check karna aur contact lenses prescribe karna." },
+    
+    // --- B.Sc. Specializations (Research & Diagnostics) ---
+    { title: "B.Sc. Medical Lab Tech (MLT)", cat: "Science Medical", dur: "3 Years", desc: "Blood tests aur diseases ke laboratory diagnosis ki study." },
+    { title: "B.Sc. Radiology & Imaging", cat: "Science Medical", dur: "3 Years", desc: "X-rays, MRI, aur CT scans ko operate aur analyze karna." },
+    { title: "B.Sc. Cardiovascular Tech", cat: "Science Medical", dur: "3 Years", desc: "Dil (heart) se judi bimariyon aur tests ki technical study." },
+    { title: "B.Sc. Dialysis Technology", cat: "Science Medical", dur: "3 Years", desc: "Kidney failure wale patients ke dialysis process ko handle karna." },
+    { title: "B.Sc. Operation Theatre Tech", cat: "Science Medical", dur: "3 Years", desc: "Surgery ke waqt OT setup aur equipments manage karna." },
+    { title: "B.Sc. Forensic Science", cat: "Science Medical", dur: "3 Years", desc: "Crime scenes se biological evidence collect aur analyze karna." },
+    { title: "B.Sc. Genetics", cat: "Science Medical", dur: "3 Years", desc: "Genes, heredity, aur DNA se judi bimariyon ki research." },
+    { title: "B.Sc. Microbiology", cat: "Science Medical", dur: "3 Years", desc: "Bacteria, virus aur fungi jaise organisms ki study." },
+    { title: "B.Sc. Biotechnology", cat: "Science Medical", dur: "3 Years", desc: "Biology aur technology ko mila kar naye products banana." },
+    
+    // --- Other Niche Fields ---
+    { title: "B.Sc. Nutrition & Dietetics", cat: "Science Medical", dur: "3 Years", desc: "Food, calories, aur healthy diet plans ki expert advice dena." },
+    { title: "B.Sc. Agriculture", cat: "Science Medical", dur: "4 Years", desc: "Crops, mitti ki quality, aur farming ki scientific study." },
+    { title: "B.Sc. Horticulture", cat: "Science Medical", dur: "4 Years", desc: "Fruits, vegetables, aur flowers ki kheti aur research." },
+    { title: "B.Sc. Psychology", cat: "Science Medical", dur: "3 Years", desc: "Insaan ke dimaag, vyavhaar, aur mental health ki study." },
+    { title: "B.Sc. Fisheries", cat: "Science Medical", dur: "4 Years", desc: "Machhliyon ki breeding, farming, aur aquatic biology ki study." },
+
+    // --- Core Engineering Branches (Classic) ---
+    { title: "Mechanical Engineering", cat: "Science Engineering", dur: "4 Years", desc: "Machines, engines, aur manufacturing systems ki design aur maintenance." },
+    { title: "Civil Engineering", cat: "Science Engineering", dur: "4 Years", desc: "Roads, bridges, buildings, aur infrastructure projects ka construction aur planning." },
+    { title: "Electrical Engineering", cat: "Science Engineering", dur: "4 Years", desc: "Electricity generation, power systems, aur electrical equipments ki study." },
+    { title: "Chemical Engineering", cat: "Science Engineering", dur: "4 Years", desc: "Raw materials ko chemicals aur useful products mein badalne ka process." },
+    { title: "Electronics & Communication (ECE)", cat: "Science Engineering", dur: "4 Years", desc: "Electronic devices, circuits, aur communication networks ki engineering." },
+    
+    // --- Technology & Systems Branches ---
+    { title: "Computer Science & Engineering (CSE)", cat: "Science Engineering", dur: "4 Years", desc: "Software development, algorithms, aur computing systems ki study." },
+    { title: "Information Technology (IT)", cat: "Science Engineering", dur: "4 Years", desc: "Business aur communication ke liye software aur database systems manage karna." },
+    { title: "Instrumentation & Control", cat: "Science Engineering", dur: "4 Years", desc: "Industrial processes ko automate karne ke liye measuring instruments design karna." },
+    { title: "Automobile Engineering", cat: "Science Engineering", dur: "4 Years", desc: "Cars, bikes, aur vehicles ki design aur production technology." },
+    { title: "Mechatronics Engineering", cat: "Science Engineering", dur: "4 Years", desc: "Mechanical systems aur electronics/robotics ka combined study." },
+    
+    // --- Niche & Specialized Fields ---
+    { title: "Aerospace/Aeronautical Engineering", cat: "Science Engineering", dur: "4 Years", desc: "Aircrafts, spacecrafts, aur missiles ki design aur testing." },
+    { title: "Marine Engineering", cat: "Science Engineering", dur: "4 Years", desc: "Ships aur boats ke engine aur technical systems ki maintenance." },
+    { title: "Mining Engineering", cat: "Science Engineering", dur: "4 Years", desc: "Zameen se minerals aur ores nikalne ki techniques aur safety management." },
+    { title: "Petroleum Engineering", cat: "Science Engineering", dur: "4 Years", desc: "Crude oil aur natural gas ki extraction aur production technology." },
+    { title: "Agricultural Engineering", cat: "Science Engineering", dur: "4 Years", desc: "Farming machinery, irrigation, aur food production technology." },
+    { title: "Biotechnology Engineering", cat: "Science Engineering", dur: "4 Years", desc: "Engineering principles ka use karke biological systems aur healthcare products banana." },
+    { title: "Textile Engineering", cat: "Science Engineering", dur: "4 Years", desc: "Fiber, yarn, aur fabric production ki machine aur processing study." },
+    { title: "Production/Industrial Engineering", cat: "Science Engineering", dur: "4 Years", desc: "Manufacturing processes ko efficient aur fast banane ki management." },
+    
+    // --- Unique & Less Explored Branches ---
+    { title: "Environmental Engineering", cat: "Science Engineering", dur: "4 Years", desc: "Pollution control, waste management, aur nature ko protect karne ke technical solutions." },
+    { title: "Materials Science Engineering", cat: "Science Engineering", dur: "4 Years", desc: "Metals, polymers, aur ceramics ki properties aur naye materials ki discovery." },
+    { title: "Food Technology Engineering", cat: "Science Engineering", dur: "4 Years", desc: "Food items ki processing, packaging, aur quality control ki engineering." },
+    { title: "Fire & Safety Engineering", cat: "Science Engineering", dur: "4 Years", desc: "Industrial fire hazards ko rokne aur safety systems install karne ki field." },
+    { title: "Biomedical Engineering", cat: "Science Engineering", dur: "4 Years", desc: "Healthcare devices jaise MRI machines aur artificial organs design karna." },
+    { title: "Printing Technology", cat: "Science Engineering", dur: "4 Years", desc: "Modern printing machines, digital layouts, aur publishing engineering." },
+
+    // --- Traditional & Specialized Degrees (Academic) ---
+    { title: "B.Com (General/Honours)", cat: "Commerce", dur: "3 Years", desc: "Accounting, Taxation, aur Business Law ki base foundation degree." },
+    { title: "BBA (Business Administration)", cat: "Commerce", dur: "3 Years", desc: "Management, HR, aur Marketing skills develop karne ka course." },
+    { title: "BMS (Management Studies)", cat: "Commerce", dur: "3 Years", desc: "Business leadership aur operational management par focus." },
+    { title: "BA in Economics", cat: "Commerce", dur: "3 Years", desc: "Economic theories, data analysis, aur market trends ki deep study." },
+    { title: "BAF (Accounting & Finance)", cat: "Commerce", dur: "3 Years", desc: "Financial accounting aur auditing mein specialization." },
+    { title: "BBI (Banking & Insurance)", cat: "Commerce", dur: "3 Years", desc: "Banking operations aur risk/insurance management ki training." },
+    { title: "BFM (Financial Markets)", cat: "Commerce", dur: "3 Years", desc: "Stock market, equity research, aur investment finance ki field." },
+    { title: "B.Voc (Retail Management)", cat: "Commerce", dur: "3 Years", desc: "Practical store operations aur e-commerce management." },
+    
+    // --- Professional Certifications (Career-Specific) ---
+    { title: "CA (Chartered Accountancy)", cat: "Commerce", dur: "4-5 Years", desc: "Audit, taxation, aur financial accounting ki prestigious professional degree." },
+    { title: "CS (Company Secretary)", cat: "Commerce", dur: "3-4 Years", desc: "Corporate law, compliance, aur legal governance ki study." },
+    { title: "CMA (Cost & Management)", cat: "Commerce", dur: "3-4 Years", desc: "Costing, budgeting, aur industrial finance management." },
+    { title: "CFP (Financial Planner)", cat: "Commerce", dur: "1-2 Years", desc: "Personal wealth management aur retirement planning." },
+    { title: "Actuarial Science", cat: "Commerce", dur: "3-5 Years", desc: "Mathematics aur statistics se insurance/finance ka risk analyze karna." },
+    { title: "ACCA (Global Accounting)", cat: "Commerce", dur: "2-3 Years", desc: "International level par accounting aur finance ki manyata." },
+    
+    // --- Law & Integrated Courses ---
+    { title: "B.Com LLB / BBA LLB", cat: "Commerce", dur: "5 Years", desc: "Commerce aur Law ka combination jo corporate lawyer banne mein madad karta hai." },
+    { title: "Integrated MBA", cat: "Commerce", dur: "5 Years", desc: "12th ke baad direct 5 saal ka graduation aur post-graduation management course." },
+    
+    // --- Creative & Skill-Based Fields ---
+    { title: "B.Des (Design)", cat: "Commerce", dur: "4 Years", desc: "Design, aesthetics, aur creative products develop karne ki field." },
+    { title: "BJMC (Journalism)", cat: "Commerce", dur: "3 Years", desc: "Media, news reporting, advertising, aur public relations." },
+    { title: "BHM (Hotel Management)", cat: "Commerce", dur: "3-4 Years", desc: "Hospitality, catering, aur hotel administration ki professional training." },
+    { title: "BCA (Computer Applications)", cat: "Commerce", dur: "3 Years", desc: "Software development aur IT systems ki study (Maths background preferred)." },
+    { title: "Digital Marketing Diploma", cat: "Commerce", dur: "6M - 1 Year", desc: "SEO, social media marketing, aur online brand building." },
+    { title: "Diploma in Travel & Tourism", cat: "Commerce", dur: "1 Year", desc: "Airline management aur tour operations ki vocational study." },
+    
+    // --- Humanities aur Social Science (Degree Courses) ---
+    { title: "B.A. General", cat: "Arts", dur: "3 Years", desc: "History, Pol. Science aur Geography ka basic foundation course." },
+    { title: "B.A. English/Literature", cat: "Arts", dur: "3 Years", desc: "Novels, poetry, aur language ki deep analysis aur writing skills." },
+    { title: "B.A. Psychology", cat: "Arts", dur: "3 Years", desc: "Insaani dimaag aur vyavhaar (human behavior) ki scientific study." },
+    { title: "B.A. Sociology", cat: "Arts", dur: "3 Years", desc: "Samajik rishte, culture, aur social institutions ki padhai." },
+    { title: "B.A. Political Science", cat: "Arts", dur: "3 Years", desc: "Government systems, constitution, aur global politics ka overview." },
+    { title: "B.A. History", cat: "Arts", dur: "3 Years", desc: "Purani sabhyataon, events, aur past cultures ki detailed study." },
+    { title: "B.A. Geography", cat: "Arts", dur: "3 Years", desc: "Earth ki physical properties aur human interaction ki study." },
+    { title: "B.A. Economics", cat: "Arts", dur: "3 Years", desc: "Wealth management, resources, aur market systems ki theory." },
+    
+    // --- Professional aur Vocational Degrees ---
+    { title: "BFA (Fine Arts)", cat: "Arts", dur: "3-4 Years", desc: "Painting, sculpture, aur visual arts mein creative specialization." },
+    { title: "BJMC (Journalism)", cat: "Arts", dur: "3 Years", desc: "News reporting, media management, aur advertising ki field." },
+    { title: "BHM (Hotel Management)", cat: "Arts", dur: "3-4 Years", desc: "Hospitality, food production, aur hotel operations ki professional training." },
+    { title: "B.S.W. (Social Work)", cat: "Arts", dur: "3 Years", desc: "Community service, NGO management, aur social welfare ka course." },
+    { title: "BBA (Business Admin)", cat: "Arts", dur: "3 Years", desc: "Business management aur marketing fundamentals ki study." },
+    { title: "B.P.Ed. (Physical Education)", cat: "Arts", dur: "3 Years", desc: "Sports, fitness, aur physical training ki professional study." },
+    { title: "B.Lib.Sc. (Library Science)", cat: "Arts", dur: "1-3 Years", desc: "Library management aur information resources ka organization." },
+    
+    // --- Law aur Education (Integrated Courses) ---
+    { title: "B.A. LLB", cat: "Arts", dur: "5 Years", desc: "Arts subjects aur Law ka combined integrated professional degree." },
+    { title: "B.A. B.Ed.", cat: "Arts", dur: "4 Years", desc: "Arts aur teaching qualification ka ek saath integrated course." },
+    
+    // --- Creative aur Design Fields ---
+    { title: "B.Des (Fashion Design)", cat: "Arts", dur: "4 Years", desc: "Clothing design, textile study, aur fashion trends management." },
+    { title: "B.Des (Interior Design)", cat: "Arts", dur: "4 Years", desc: "Space planning aur indoor environments ki aesthetic design." },
+    { title: "B.Des (Graphic Design)", cat: "Arts", dur: "4 Years", desc: "Digital branding, logos, aur visual communication design." },
+    { title: "B.Sc. Animation & VFX", cat: "Arts", dur: "3 Years", desc: "2D/3D animation aur movies ke liye visual effects banana." },
+    { title: "Performing Arts", cat: "Arts", dur: "3-4 Years", desc: "Acting, classical/modern dance, aur vocal/instrumental music." },
+    
+    // --- Skill-Based Diploma Options ---
+    { title: "Diploma in Travel & Tourism", cat: "Arts", dur: "1-2 Years", desc: "Ticketing, tour guiding, aur travel agency management." },
+    { title: "Diploma in Foreign Languages", cat: "Arts", dur: "1-2 Years", desc: "French, German, ya Spanish jaise languages mein proficiency." },
+    { title: "Diploma in Photography", cat: "Arts", dur: "1 Year", desc: "Commercial aur artistic photography ki technical training." },
+    { title: "Diploma in Digital Marketing", cat: "Arts", dur: "6M - 1 Year", desc: "Online advertising aur brand building techniques." },
+    
+    // --- Core Design Fields (Popular) ---
+    { title: "Fashion Design", cat: "Design", dur: "4 Years", desc: "Kapdo aur accessories ki design, garment construction, aur fashion trends ki study." },
+    { title: "Interior Design", cat: "Design", dur: "3-4 Years", desc: "Gharon aur offices ke andar ki jagah ko sundar aur kaam layak banana." },
+    { title: "Graphic Design", cat: "Design", dur: "3-4 Years", desc: "Logos, branding, aur digital visuals ke zariye communication design karna." },
+    { title: "Product Design", cat: "Design", dur: "4 Years", desc: "Rozmarra ke physical products (gadgets, furniture) ki functional design." },
+    { title: "UI/UX Design", cat: "Design", dur: "3-4 Years", desc: "Apps aur websites ke interface aur user experience ko behtar banana." },
+    
+    // --- Communication & Media Design ---
+    { title: "Animation Film Design", cat: "Design", dur: "4 Years", desc: "2D/3D animation, character design, aur digital storytelling ki field." },
+    { title: "Visual Communication", cat: "Design", dur: "4 Years", desc: "Information ko images, symbols, aur typography se prabhavshali banana." },
+    { title: "VFX & Interaction Design", cat: "Design", dur: "4 Years", desc: "Movies aur games ke liye special effects aur interactive media taiyar karna." },
+    { title: "Game Design", cat: "Design", dur: "4 Years", desc: "Video games ke rules, characters, aur gameplay mechanics design karna." },
+    { title: "Film & Video Communication", cat: "Design", dur: "4 Years", desc: "Film making, editing, aur video production ki creative study." },
+    
+    // --- Industrial & Niche Design Fields ---
+    { title: "Transportation/Automobile Design", cat: "Design", dur: "4 Years", desc: "Cars, bikes, aur public transport vehicles ki exterior/interior design." },
+    { title: "Textile Design", cat: "Design", dur: "4 Years", desc: "Kapdo ke fiber, prints, weaves, aur patterns taiyar karne ki study." },
+    { title: "Jewellery & Precious Metal Design", cat: "Design", dur: "4 Years", desc: "Gehne aur metals ki design, manufacturing, aur gemology ki field." },
+    { title: "Furniture & Interior Objects", cat: "Design", dur: "4 Years", desc: "Specialized furniture aur home decor items ki material-based design." },
+    { title: "Ceramic & Glass Design", cat: "Design", dur: "4 Years", desc: "Mitti aur kanch se bane products ki creative engineering." },
+    { title: "Exhibition Design", cat: "Design", dur: "4 Years", desc: "Museums aur events ke liye stall aur space arrangement design karna." },
+    
+    // --- Emerging & Creative Fields ---
+    { title: "Toy & Game Design", cat: "Design", dur: "4 Years", desc: "Bachon ke khilone aur educational games ki design aur psychology." },
+    { title: "Footwear Design", cat: "Design", dur: "3-4 Years", desc: "Jooton ki design, material selection, aur manufacturing." },
+    { title: "Fashion Communication", cat: "Design", dur: "4 Years", desc: "Fashion branding, photography, styling, aur journalism ki study." },
+    { title: "Craft & Accessory Design", cat: "Design", dur: "4 Years", desc: "Traditional crafts ko modern lifestyle products mein badalna." },
+    { title: "Digital Product Design", cat: "Design", dur: "4 Years", desc: "Modern software aur technology-driven gadgets ki system design." },
+
+        
+    // --- Staff Selection Commission (SSC) ---
+    { title: "SSC CHSL", cat: "Government", dur: "12-18 Months", desc: "LDC, JSA aur Data Entry Operator ki post ke liye clerical exam." },
+    { title: "SSC MTS", cat: "Government", dur: "1 Year", desc: "Non-technical staff jaise Peon, Gardener aur Watchman ki bharti." },
+    { title: "SSC Stenographer", cat: "Government", dur: "1 Year", desc: "Shorthand typing ke base par mantralayon me stenographer ki post." },
+    { title: "SSC GD Constable", cat: "Government", dur: "1.5 Years", desc: "BSF, CISF, aur CRPF jaise forces me constable banne ka rasta." },
+    
+    // --- Defense Services (Armed Forces) ---
+    { title: "NDA (National Defence Academy)", cat: "Government", dur: "4 Years", desc: "Army, Navy ya Air Force me Commissioned Officer banne ke liye training." },
+    { title: "Agniveer (Tri-Services)", cat: "Government", dur: "4 Years", desc: "Soldier, Sailor ya Airman ke taur par 4 saal ki desh seva." },
+    { title: "Indian Coast Guard", cat: "Government", dur: "6-12 Months", desc: "Samundari seemao ki nigrani aur technical sahayata ke liye Navik/Yantrik." },
+    
+    // --- Indian Railways (RRB) ---
+    { title: "RRB NTPC (UG Level)", cat: "Government", dur: "1 Year", desc: "Clerk, Typist aur Ticket Clerk jaisi administrative posts." },
+    { title: "RRB Group D", cat: "Government", dur: "1 Year", desc: "Track Maintainer aur Assistant (Pointsman) jaise ground-level kaam." },
+    { title: "RRB ALP (Assistant Loco Pilot)", cat: "Government", dur: "1-1.5 Years", desc: "Train chalane me pilot ki madad karne ke liye technical role." },
+    { title: "RPF Constable", cat: "Government", dur: "1 Year", desc: "Railway property aur yatriyo ki suraksha ke liye police force." },
+    
+    // --- Banking & Insurance ---
+    { title: "IBPS/SBI Clerk", cat: "Government", dur: "8-12 Months", desc: "Bank me front desk aur data maintenance ka clerical kaam." },
+    { title: "LIC Assistant", cat: "Government", dur: "1 Year", desc: "Insurance policies aur office administration sambhalne ka role." },
+    
+    // --- State Government & Local Bodies ---
+    { title: "State Police Constable", cat: "Government", dur: "1 Year", desc: "Rajya ki law and order vyavastha me ground-level police post." },
+    { title: "Panchayat Sahayak", cat: "Government", dur: "1 Year", desc: "Gaon ke vikas aur sarkari yojnaon ke implementation ka kaam." },
+    { title: "Forest Guard", cat: "Government", dur: "1 Year", desc: "Jungalon aur wildlife ki suraksha aur monitoring." },
+    { title: "Anganwadi Worker", cat: "Government", dur: "Direct Selection", desc: "Mahila aur bal vikas ke liye local community me healthcare aur education." },
+    
+    // --- Technical & Special Fields ---
+    { title: "India Post (GDS)", cat: "Government", dur: "Merit-based", desc: "Post office me dak bitrane aur record maintain karne ka kaam." },
+    { title: "Fireman (Municipal)", cat: "Government", dur: "6-12 Months", desc: "Fire safety aur rescue operations ke liye physical-technical role." },
+    { title: "Lab Assistant", cat: "Government", dur: "1 Year", desc: "Schools aur colleges ki labs me equipments ki dekh-rekh." }
+];
+        
+        
+        
+
+        let selectedCat = 'all';
+        const searchInput = document.getElementById('courseSearch');
+        const container = document.getElementById('courseContainer');
+        const statusCount = document.getElementById('statusCount');
+        const scrollBtn = document.getElementById('scrollTopBtn');
+
+        function render(data) {
+            container.innerHTML = data.map(c => `
+                <div class="digital-card">
+                    <div class="card-cat">${c.cat}</div>
+                    <h3>${c.title}</h3>
+                    <p>${c.desc}</p>
+                    <div class="card-footer">
+                        <i class="far fa-clock"></i> ${c.dur}
+                    </div>
+                </div>
+            `).join('');
+            
+            // System Status Logic
+            statusCount.innerText = `[ SYSTEM STATUS: ${data.length} PATHS FOUND ]`;
+        }
+
+        function filter() {
+            const query = searchInput.value.toLowerCase().replace(/[.]/g, "");
+            const filtered = courses.filter(c => {
+                const titleMatch = c.title.toLowerCase().replace(/[.]/g, "").includes(query);
+                const descMatch = c.desc.toLowerCase().includes(query);
+                const catMatch = selectedCat === 'all' || c.cat === selectedCat;
+                return catMatch && (titleMatch || descMatch);
+            });
+            render(filtered);
+        }
+
+        searchInput.addEventListener('input', filter);
+
+        document.querySelectorAll('.chip').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.chip').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                selectedCat = btn.getAttribute('data-cat');
+                filter();
+            });
+        });
+
+        // Scroll Logic
+        window.onscroll = function() {
+            if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+                scrollBtn.style.display = "flex";
+            } else {
+                scrollBtn.style.display = "none";
+            }
+        };
+
+        render(courses);
+    </script>
+</body>
+</html>

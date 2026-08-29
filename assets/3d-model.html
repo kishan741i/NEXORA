@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Liquid Metal Effect</title>
+    <style>
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #000000;
+        }
+
+        /* --- MANUAL WIDTH & HEIGHT CONTROL --- */
+        .canvas-container {
+            width: 100%;            /* Laptop/Desktop ke liye default width */
+            max-width: 700px;        /* Maximum width limit */
+            height: 450px;           /* Manual Height yahan set karein */
+            position: relative;
+            overflow: hidden;
+            border-radius: 20px;     /* Optional: Corners curve karne ke liye */
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+        }
+
+        canvas {
+            display: block;
+            width: 100% !important;
+            height: 100% !important;
+        }
+
+        /* Mobile Devices ke liye extra adjustments agar chahiye toh */
+        @media (max-width: 768px) {
+            .canvas-container {
+                width: 95%;           /* Mobile par screen ka 95% lega */
+                height: 350px;       /* Mobile ke liye height kam kar sakte hain */
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Canvas Container for Manual Sizing -->
+    <div class="canvas-container" id="canvas-box"></div>
+
+    <!-- Three.js Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+    <script>
+        // Website load hote hi Maintenance Notice ka alert dikhane ka logic
+        window.addEventListener('DOMContentLoaded', () => {
+            // Check karein ki is session mein alert pehle dikhaya gaya hai ya nahi
+            if (!sessionStorage.getItem('maintenanceNoticeShown')) {
+                alert("Maintenance scheduled for every Sunday.");
+                // Session storage mein set kar denge taaki page refresh hone par baar-baar alert na aaye
+                sessionStorage.setItem('maintenanceNoticeShown', 'true');
+            }
+        });
+
+        const container = document.getElementById('canvas-box');
+
+        // Scene, Camera, Renderer
+        const scene = new THREE.Scene();
+        
+        // Dynamic aspect ratio container ki width aur height ke mutabiq
+        const camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
+        camera.position.z = 5;
+
+        const renderer = new THREE.WebGLRenderer({ antialias: true });
+        renderer.setSize(container.clientWidth, container.clientHeight);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        
+        // Canvas ko container ke andar append kiya hai
+        container.appendChild(renderer.domElement);
+
+        // Lights for deep metallic reflections
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
+        scene.add(ambientLight);
+
+        const light1 = new THREE.PointLight(0x00d2ff, 4, 50);
+        light1.position.set(5, 5, 5);
+        scene.add(light1);
+
+        const light2 = new THREE.PointLight(0xff0055, 3, 50);
+        light2.position.set(-5, -5, 5);
+        scene.add(light2);
+
+        // High Glossy Liquid Chrome Material
+        const material = new THREE.MeshStandardMaterial({
+            color: 0x111318,
+            metalness: 0.98,
+            roughness: 0.08,
+            wireframe: false
+        });
+
+        // High detail Sphere Geometry so vertices can morph smoothly
+        const geometry = new THREE.SphereGeometry(1.6, 128, 128);
+        
+        const positionAttribute = geometry.attributes.position;
+        const initialPositions = new Float32Array(positionAttribute.array);
+
+        const blobMesh = new THREE.Mesh(geometry, material);
+        scene.add(blobMesh);
+
+        // Animation Loop
+        let clock = new THREE.Clock();
+
+        function animate() {
+            requestAnimationFrame(animate);
+            let time = clock.getElapsedTime() * 1.5;
+
+            for (let i = 0; i < positionAttribute.count; i++) {
+                const ix = initialPositions[i * 3];
+                const iy = initialPositions[i * 3 + 1];
+                const iz = initialPositions[i * 3 + 2];
+
+                const length = Math.sqrt(ix * ix + iy * iy + iz * iz);
+                const wave = Math.sin(time + ix * 3) * Math.cos(time + iy * 3) * Math.sin(time + iz * 3) * 0.3;
+
+                positionAttribute.setXYZ(
+                    i,
+                    ix + (ix / length) * wave,
+                    iy + (iy / length) * wave,
+                    iz + (iz / length) * wave
+                );
+            }
+
+            positionAttribute.needsUpdate = true;
+            geometry.computeVertexNormals();
+
+            blobMesh.rotation.x = time * 0.2;
+            blobMesh.rotation.y = time * 0.3;
+
+            renderer.render(scene, camera);
+        }
+
+        animate();
+
+        // Responsive Resize Handler (Container ke size ke hisab se automatically adjust hoga)
+        window.addEventListener('resize', () => {
+            const width = container.clientWidth;
+            const height = container.clientHeight;
+            
+            camera.aspect = width / height;
+            camera.updateProjectionMatrix();
+            renderer.setSize(width, height);
+        });
+    </script>
+</body>
+</html>
