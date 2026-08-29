@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nexora — Learn. Build. Discover</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <link rel="icon" type="image/svg+xml" href="assets/nexora-logo.svg">
+    <!-- Standard Favicons -->
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16x16.png">
+    <!-- <link rel="shortcut icon" href="assets/favicon.ico"> -->
+    
+    <!-- Apple Touch Icon (iOS Devices) -->
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png">
+    
+    <!-- Android Chrome Icons & Web Manifest -->
+    <link rel="manifest" href="assets/site.webmanifest">
+    <link rel="stylesheet" href="./styles.css">    
+</head>
+<body>
+    <!-- Background Music Engine (1% Volume & Infinite Loop) -->
+    <audio id="bgAudio" src="assets/Itachi Uchiha.mp3" loop></audio>
+
+    <!-- Dynamic Background Wrapper (Video aur Iframe dono ke liye) -->
+    <div id="dynamic-bg-wrapper" class="bg-locked-layer"></div>
+
+    <!-- Attractive Modal -->
+    <div id="elibModal" class="modal-full">
+        <div class="elib-modal-container">
+            <!-- Header -->
+            <div class="elib-header">
+                <div class="modal-title-area">               
+                    <h2  style="margin-bottom: 20px; font-size: 0.9rem; color: var(--text-dim); letter-spacing: 1px; text-transform: uppercase;">E-LIBRARY REPOSITORY<span id="fileCount">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- 0 Files</span></h2>
+                </div>
+                <button class="elib-close-btn" onclick="closeModal()">&times;</button>
+            </div>
+            
+            <!-- Toolbar (Search + Filters) -->
+            <div class="modal-toolbar">
+                <div class="search-box">
+                    <i class="fa fa-search"></i>
+                    <input type="text" id="searchInput" placeholder="Search files by name..." onkeyup="filterFiles()">
+                </div>
+                <div class="filter-chips">
+                    <div class="chip active" onclick="filterCategory('all', this)">All</div>
+                    <div class="chip" onclick="filterCategory('pdf', this)">PDFs</div>
+                    <div class="chip" onclick="filterCategory('doc', this)">Docs</div>
+                    <div class="chip" onclick="filterCategory('code', this)">Code</div>
+                    <div class="chip" onclick="filterCategory('img', this)">Images</div>
+                </div>
+            </div>
+            
+            <!-- Body Grid -->
+            <div class="elib-modal-body">
+                <div class="file-grid" id="fileGrid">
+                    <!-- Dynamically rendered via JavaScript -->
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <canvas id="particle-canvas"></canvas>
+    
+    <div id="demo-modal">
+        <div class="demo-modal-content">
+            <div class="demo-modal-header">
+                <h2 id="demo-title" style="margin-bottom: 20px; font-size: 0.9rem; color: var(--text-dim); letter-spacing: 1px; text-transform: uppercase;">Live Preview</h2>
+                <button class="demo-close-btn" onclick="closeDemo()">&times;</button>
+            </div>
+            <iframe id="demo-iframe" src="" title="Live Project Demo"></iframe>
+        </div>
+    </div>
+    
+    <header>
+        <div class="logo">NEXORA</div>
+    </header>
+    
+    <div class="stats-bar">
+        <!-- <div class="stat-item visitor-badge-container"> -->
+            <div class="stat-item">
+                <i class="fa-solid fa-users" style="color: var(--accent);"></i>
+                <img src="https://api.visitorbadge.io/api/visitors?path=kishan741i.Cloud9&label&countColor=%2300000000" style="vertical-align: middle; height: 25px;" /> VISITORS
+            </div>
+            <div class="stat-divider"></div>
+            <div class="stat-item"><i class="fa-solid fa-code-branch"></i> 4 REPOSITORIES</div>
+            <div class="stat-divider"></div>
+            <div class="stat-item"><i class="fa-solid fa-file-pdf"></i> 115 DOCUMENTS</div>
+            <div class="stat-divider"></div>
+            <div class="stat-item"><i class="fa-solid fa-circle-check"></i> v7.11 OPERATIONAL</div>
+            <div class="stat-divider"></div>
+            <div class="stat-item" style="text-decoration: underline; cursor: pointer;"><a onclick="openModal()" class="active"><i class="fa-solid fa-book-open"></i> E-LIBRARY PREVIEW</a></div>
+        </div>
+        
+        <div class="container">
+            <main class="main-content">
+                <div class="maintenance-notice">
+                    <i class="fa-solid fa-circle-exclamation"></i>
+                    <span>
+                        <a style="color: var(--danger);" href="https://kishan741i.github.io/3d-model/">3D-model is now fully developed.</a></span>
+                    </div>
+                    
+                    <section class="card">
+                        <h2 style="font-weight: 800; letter-spacing: 1px; margin-bottom: 25px; text-transform: uppercase;">REPOSITORY FEEDS</h2>
+                        <div class="project-grid">
+                            <div class="project-item">
+                                <div class="tech-stack">
+                                    <span class="tech-tag">HTML5</span>
+                                    <span class="tech-tag">CSS3</span>
+                                    <span class="tech-tag">JS</span>
+                                    <span class="tech-tag">Responsive</span>
+                                </div>
+                                <h3>Career Navigator</h3>
+                                <p>A comprehensive 12th-after career guide designed to help students discover and filter courses based on their academic streams.</p>
+                                <div class="btn-group">
+                                    <a class="btn-primary" style="cursor: pointer;" onclick="openDemo('https://kishan741i.github.io/career-navigator/', 'Career Navigator')"><i class="fa-solid fa-rocket"></i>Live Demo</a>
+                                    <a href="https://github.com/kishan741i/career-navigator" target="_blank" class="btn-outline" style="justify-content:center;">
+                                        <i class="fa-brands fa-github"></i> Repository
+                                    </a>
+                                </div>
+                            </div>
+                            
+                            <div class="project-item">
+                                <div class="tech-stack">
+                                    <span class="tech-tag">HTML5</span>
+                                    <span class="tech-tag">CSS3</span>
+                                    <span class="tech-tag">JS</span>
+                                </div>
+                                <h3>Habit Tracker Pro</h3>
+                                <p>A productivity-focused application designed to track and manage your daily goals effectively.</p>
+                                <div class="btn-group">
+                                    <a class="btn-primary" style="cursor: pointer;" onclick="openDemo('https://kishan741i.github.io/Habit-tracker-Pro/', 'Habit Tracker Pro')"><i class="fa-solid fa-rocket"></i>Live Demo</a>
+                                    <a href="https://github.com/kishan741i/Habit-tracker-Pro" target="_blank" class="btn-outline" style="justify-content:center;">
+                                        <i class="fa-brands fa-github"></i> Repository
+                                    </a>
+                                </div>
+                            </div>
+                    
+                            <div class="project-item">
+                                <div class="tech-stack">
+                                    <span class="tech-tag">Bootstrap 5</span>
+                                    <span class="tech-tag">PHP</span>
+                                    <span class="tech-tag">MySQL</span>
+                                </div>
+                                <h3>Notes Application</h3>
+                                <p>A minimalist notes management tool built with a modern glassmorphism UI for a sleek experience.</p>
+                                <div class="btn-group">
+                                    <a href="https://github.com/kishan741i/notes_app" target="_blank" class="btn-outline" style="justify-content:center;"><i class="fa-brands fa-github"></i> Repository</a>
+                                </div>
+                            </div>
+
+                            <div class="project-item">
+                                <div class="tech-stack">
+                                    <span class="tech-tag">Bootstrap 5</span><span class="tech-tag">PHP</span><span class="tech-tag">MySQL</span>
+                                </div>
+                                <h3>News Portal</h3>
+                                <p>A real-time news aggregation system that fetches the latest global updates using high-performance APIs.</p>
+                                <div class="btn-group">
+                                    <a href="https://github.com/kishan741i/news-site" target="_blank" class="btn-outline" style="justify-content:center;"><i class="fa-brands fa-github"></i> Repository</a>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+            </main>
+        
+        <aside class="sidebar">
+            <section class="card">
+                <h3 style="margin-bottom: 25px; font-size: 0.9rem; color: var(--text-dim); letter-spacing: 1px; text-transform: uppercase;">E-LIBRARY</h3>
+                <div class="news-feed">
+                    <div class="library-item">
+                        <button onclick="openInDrive('1wZYNzzs49yKQ8ybYzpvS7Uw8noiIRu1z')" class="btn-outline"><i class="fa-solid fa-bullhorn" style="color:var(--accent)"></i> Notice Board</button>
+                        <p>Official notices and academic announcements.</p>
+                    </div>
+                    <div class="library-item">
+                        <button onclick="openInDrive('1KzyQ0xFFbIDmtj6RTyJIEMy7w8yKc_7H')" class="btn-outline"> <i class="fa-solid fa-code" style="color:var(--accent)"></i> Lab & Practicals</button>
+                        <p>Lab manuals and practical documentation.</p>
+                    </div>
+                    <div class="library-item">
+                        <button onclick="openInDrive('1K268y0_fgaRC-TQ52ZGOVQYRiSlbnbfL')" class="btn-outline"><i class="fa-solid fa-file-lines" style="color:var(--accent)"></i> PYQ Archive</button>
+                        <p>Previous year question papers collection.</p>
+                    </div>
+                    <div class="library-item">
+                        <button onclick="openInDrive('1mlmmji-KnSD0S3x8cvMiyA944-uoCUqj')" class="btn-outline"><i class="fa-solid fa-folder-tree" style="color:var(--accent)"></i> Resources</button>
+                        <p>Essential tools and learning materials.</p>
+                    </div>
+                </div>
+            </section>
+            
+            <section class="card">
+                <h3 style="margin-bottom: 20px; font-size: 0.9rem; color: var(--text-dim); letter-spacing: 1px; text-transform: uppercase;">QUICK LINKS</h3>
+                <div class="marquee-container">
+                    <div class="marquee-content">
+                        <a href="https://aspdotnethelp.com/" target="_blank" class="quick-link"><i class="fa-solid fa-globe"></i> ASP.NET Help <span>.NET solutions</span></a>
+                        <a href="https://developer.mozilla.org/en-US/" target="_blank" class="quick-link"><i class="fa-brands fa-firefox"></i> MDN Web Docs <span>web standards</span></a>
+                        <a href="https://quickref.me/" target="_blank" class="quick-link"><i class="fa-solid fa-bolt"></i> QuickRef.ME <span>quick cheat sheets</span></a>
+                        <a href="https://www.w3schools.com/" target="_blank" class="quick-link"><i class="fa-solid fa-graduation-cap"></i> W3Schools <span>web tutorials</span></a>
+                        <a href="https://www.geeksforgeeks.org/" target="_blank" class="quick-link"><i class="fa-solid fa-code"></i> GeeksforGeeks <span>coding portal</span></a>
+                        <a href="https://overapi.com/" target="_blank" class="quick-link"><i class="fa-solid fa-list-check"></i> OverAPI <span>all-in-one cheats</span></a>
+                        <a href="https://aspdotnethelp.com/" target="_blank" class="quick-link"><i class="fa-solid fa-globe"></i> ASP.NET Help <span>.NET solutions</span></a>
+                        <a href="https://developer.mozilla.org/en-US/" target="_blank" class="quick-link"><i class="fa-brands fa-firefox"></i> MDN Web Docs <span>web standards</span></a>
+                        <a href="https://quickref.me/" target="_blank" class="quick-link"><i class="fa-solid fa-bolt"></i> QuickRef.ME <span>quick cheat sheets</span></a>
+                        <a href="https://www.w3schools.com/" target="_blank" class="quick-link"><i class="fa-solid fa-graduation-cap"></i> W3Schools <span>web tutorials</span></a>
+                        <a href="https://www.geeksforgeeks.org/" target="_blank" class="quick-link"><i class="fa-solid fa-code"></i> GeeksforGeeks <span>coding portal</span></a>
+                        <a href="https://overapi.com/" target="_blank" class="quick-link"><i class="fa-solid fa-list-check"></i> OverAPI <span>all-in-one cheats</span></a>
+                    </div>
+                </div>
+            </section>
+        </aside>
+    </div>
+    <div class="container">
+        <section class="card">
+            <h3 style="margin-bottom: 20px; font-size: 0.9rem; color: var(--text-dim); letter-spacing: 1px; text-transform: uppercase;">LATEST UPDATES</h3>
+            <div class="news-feed">
+                <div class="news-item">
+                    <h4><span class="pulse-dot red-dot"></span>Adaptive Typography Engine</h4>
+                    <p>Portal ab automatically aapke device ke native fonts (Vivo, iOS, Windows) ko apply karta hai, jisse performance aur personalization behtar hoti hai.</p>
+                </div>
+                <div class="news-item">
+                    <h4><span class="pulse-dot red-dot"></span>Glassmorphism Engine 2.0</h4>
+                    <p> Improved background blur performance and real-time reflection mapping for window frames.</p>
+                </div>
+                <div class="news-item">
+                    <h4><span class="pulse-dot red-dot"></span>Zero-Latency File Explorer</h4>
+                    <p> Implementation of an "Instant-Fetch" logic for cloud storage, allowing users to browse remote files as if they were local.</p>
+                 </div>
+                 <div class="news-item">
+                    <h4><span class="pulse-dot red-dot"></span>Multi-Device Synchronization</h4>
+                    <p> Real-time state saving. If a user closes a window on their phone, it reflects immediately on the desktop view.</p>
+                 </div>
+                </div>
+            </section>
+            
+            <section class="card">
+                <h3 style="margin-bottom: 20px; font-size: 0.9rem; color: var(--text-dim); letter-spacing: 1px; text-transform: uppercase;">FUTURE ROADMAP</h3>
+                <div class="news-feed">
+                    <div class="news-item">
+                        <h4><span class="pulse-dot green-dot"></span>AI Copilot Integration (Q3 2026)</h4>
+                        <p> A built-in terminal assistant that can execute cloud commands, organize files, or summarize documents using LLMs.</p>
+                    </div>
+                    <div class="news-item">
+                        <h4><span class="pulse-dot green-dot"></span>Zero-Trust Security Layer (Q4 2026)</h4>
+                        <p> Every app execution requires a "Silent Verify" check to ensure the cloud environment hasn't been compromised.</p>
+                    </div>
+                    <div class="news-item">
+                        <h4><span class="pulse-dot green-dot"></span>Voice-First Interface (2027)</h4>
+                        <p> Complete hands-free navigation using advanced NLP (Natural Language Processing).</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+        
+        
+        <footer>
+            © 2026 Nexora · Learn · Build · Discover
+        </footer>
+        
+        <!-- MOBILE SIDEBAR -->
+        <div id="mobile-sidebar-overlay"></div>
+
+    
+<aside id="mobile-sidebar">
+
+    <div class="mobile-sidebar-header">
+        <span>NEXORA</span>
+        <button id="close-sidebar">&times;</button>
+    </div>
+
+    <div class="mobile-sidebar-links">
+
+        <!-- 3D Model -->
+        <button class="mobile-demo-link"
+            data-url="./assets/3d-model.html"
+            data-title="3D Model">
+            <i class="fa-solid fa-cube"></i>
+            3D Model
+        </button>
+
+        <!-- Career Navigator -->
+        <button class="mobile-demo-link"
+            data-url="./assets/career-navigator.html"
+            data-title="Career Navigator">
+            <i class="fa-solid fa-compass"></i>
+            Career Navigator
+        </button>
+
+        <!-- DriveLink - Google Drive Link Converter -->
+        <button class="mobile-demo-link"
+            data-url="./assets/DriveLink.html"
+            data-title="DriveLink — Google Drive Link Converter">
+            <i class="fa-brands fa-google-drive"></i>
+            DriveLink
+        </button>
+
+        <!-- DSR - Activity Record -->
+        <button class="mobile-demo-link"
+            data-url="./assets/DSR.html"
+            data-title="DSR — Activity Record">
+            <i class="fa-solid fa-clipboard-list"></i>
+            DSR
+        </button>
+
+        <div class="mobile-sidebar-divider"></div>
+
+        <!-- Habit Tracker Pro - Habit Monitor -->
+        <button class="mobile-demo-link"
+            data-url="./assets/habit-tracker.html"
+            data-title="Habit Tracker Pro — Habit Monitor">
+            <i class="fa-solid fa-chart-line"></i>
+            Habit Tracker Pro
+        </button>
+
+        <!-- Shagun - Marriage Relative List -->
+        <button class="mobile-demo-link"
+            data-url="./assets/shagun.html"
+            data-title="Shagun — Marriage Relative List">
+            <i class="fa-solid fa-users"></i>
+            Shagun
+        </button>
+
+    </div>
+
+</aside>
+    
+    <!-- MOBILE SIDEBAR BUTTON -->
+    <button id="mobile-menu-btn" aria-label="Open Menu">
+        <i class="fa-solid fa-bars"></i>
+    </button>
+    
+    <script src="./script.js"></script>
+</body>
+</html>
