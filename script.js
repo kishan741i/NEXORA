@@ -905,7 +905,7 @@ function checkSundayRedirect() {
   const now = new Date();
 
   if (now.getDay() === 0) {
-    window.location.href = "http://kishan741i.github.io/3d-model";
+    window.location.href = "http://kishan741i.github.io/NEXORA";
   }
 }
 
@@ -1141,3 +1141,44 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 checkSundayRedirect();
+
+/* =================================
+   DESKTOP APP DOWNLOAD POPUP
+================================= */
+
+document.addEventListener("DOMContentLoaded", function () {
+  const appModal = document.getElementById("app-download-modal");
+  const closeBtn = document.getElementById("close-app-download");
+
+  if (!appModal || !closeBtn) return;
+
+  // Sirf Desktop par popup show hoga
+  function showAppPopup() {
+    if (window.innerWidth > 768) {
+      appModal.classList.add("show");
+
+      // Website ka background scroll lock
+      document.body.style.overflow = "hidden";
+    }
+  }
+
+  // Close popup
+  function closeAppPopup() {
+    appModal.classList.remove("show");
+
+    // Scroll wapas enable
+    document.body.style.overflow = "";
+  }
+
+  closeBtn.addEventListener("click", closeAppPopup);
+
+  // Popup ke bahar click karne par close
+  appModal.addEventListener("click", function (event) {
+    if (event.target === appModal) {
+      closeAppPopup();
+    }
+  });
+
+  // Website load hone ke baad popup
+  setTimeout(showAppPopup, 800);
+});

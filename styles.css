@@ -1727,3 +1727,163 @@ footer {
     display: none !important;
   }
 }
+
+/* ================================
+   DESKTOP APP DOWNLOAD POPUP
+================================ */
+
+.app-download-modal {
+  display: none;
+
+  position: fixed;
+  inset: 0;
+
+  z-index: 99999;
+
+  align-items: center;
+  justify-content: center;
+
+  background: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.app-download-modal.show {
+  display: flex;
+}
+
+.app-download-box {
+  position: relative;
+
+  width: min(420px, 90%);
+  padding: 35px 30px;
+
+  text-align: center;
+
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 22px;
+
+  background: rgba(20, 20, 35, 0.92);
+
+  box-shadow:
+    0 25px 80px rgba(0, 0, 0, 0.5),
+    0 0 40px rgba(99, 102, 241, 0.15);
+
+  animation: appPopup 0.35s ease;
+}
+
+.app-download-close {
+  position: absolute;
+
+  top: 12px;
+  right: 15px;
+
+  width: 35px;
+  height: 35px;
+
+  border: none;
+  border-radius: 50%;
+
+  background: rgba(255, 255, 255, 0.08);
+  color: white;
+
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.app-download-close:hover {
+  background: rgba(255, 255, 255, 0.16);
+}
+
+.app-download-icon {
+  width: 70px;
+  height: 70px;
+
+  margin: 0 auto 20px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 20px;
+
+  background: rgba(99, 102, 241, 0.15);
+
+  color: var(--accent);
+
+  font-size: 30px;
+}
+
+.app-download-box h2 {
+  margin-bottom: 12px;
+
+  color: white;
+
+  font-size: 1.4rem;
+}
+
+.app-download-box p {
+  margin-bottom: 25px;
+
+  color: var(--text-dim);
+
+  line-height: 1.6;
+}
+
+.app-download-btn {
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+  padding: 12px 25px;
+
+  border-radius: 10px;
+
+  background: var(--accent);
+  color: white;
+
+  text-decoration: none;
+
+  font-weight: 700;
+
+  transition: 0.25s;
+}
+
+.app-download-btn:hover {
+  transform: translateY(-2px);
+}
+
+.app-download-box small {
+  display: block;
+
+  margin-top: 15px;
+
+  color: var(--text-dim);
+}
+
+/* Popup animation */
+
+@keyframes appPopup {
+  from {
+    opacity: 0;
+    transform: scale(0.9) translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* =================================
+   MOBILE / TABLET
+   POPUP COMPLETELY DISABLED
+================================= */
+
+@media (max-width: 768px) {
+  .app-download-modal {
+    display: none !important;
+  }
+}
