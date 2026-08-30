@@ -1,0 +1,91 @@
+/* ==========================================================================
+   NEXORA — Design Tokens
+   ========================================================================== */
+
+:root {
+  /* ---- Surfaces ---- */
+  --bg-primary: #05070d;
+  --bg-secondary: #0a0e18;
+  --bg-tertiary: #0d1220;
+  --surface: rgba(255, 255, 255, 0.045);
+  --surface-elevated: rgba(255, 255, 255, 0.075);
+  --surface-hover: rgba(255, 255, 255, 0.1);
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-strong: rgba(255, 255, 255, 0.14);
+
+  /* ---- Brand ---- */
+  --primary: #38bdf8;       /* electric blue */
+  --primary-rgb: 56, 189, 248;
+  --accent: #22d3ee;        /* bright cyan */
+  --accent-rgb: 34, 211, 238;
+  --secondary: #a78bfa;     /* violet */
+  --secondary-rgb: 167, 139, 250;
+  --gradient-brand: linear-gradient(135deg, var(--accent) 0%, var(--primary) 45%, var(--secondary) 100%);
+  --gradient-brand-soft: linear-gradient(135deg, rgba(34,211,238,.16) 0%, rgba(56,189,248,.16) 45%, rgba(167,139,250,.16) 100%);
+
+  /* ---- Text ---- */
+  --text-primary: #eef1f7;
+  --text-secondary: #8b93a7;
+  --text-muted: #4d5568;
+  --text-on-brand: #04060b;
+
+  /* ---- Status ---- */
+  --success: #34d399;
+  --success-rgb: 52, 211, 153;
+  --warning: #fbbf24;
+  --warning-rgb: 251, 191, 36;
+  --danger: #fb7185;
+  --danger-rgb: 251, 113, 133;
+
+  /* ---- Type ---- */
+  --font-display: 'Space Grotesk', 'Inter', system-ui, sans-serif;
+  --font-body: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+
+  /* ---- Radii ---- */
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+  --radius-full: 999px;
+
+  /* ---- Shadow / Glow ---- */
+  --shadow-soft: 0 8px 30px rgba(0, 0, 0, 0.35);
+  --shadow-elevated: 0 20px 60px rgba(0, 0, 0, 0.5);
+  --glow-primary: 0 0 24px rgba(var(--primary-rgb), 0.35);
+  --glow-accent: 0 0 24px rgba(var(--accent-rgb), 0.3);
+
+  /* ---- Motion ---- */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-fast: 150ms;
+  --dur-base: 260ms;
+  --dur-slow: 500ms;
+
+  /* ---- Layout ---- */
+  --max-width: 1520px;
+  --nav-height: 68px;
+  --status-height: 38px;
+  --bottom-nav-height: 64px;
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+/* ---- Light theme override ---- */
+[data-theme='light'] {
+  --bg-primary: #f4f6fb;
+  --bg-secondary: #eaeef7;
+  --bg-tertiary: #e2e7f2;
+  --surface: rgba(20, 30, 55, 0.045);
+  --surface-elevated: rgba(20, 30, 55, 0.07);
+  --surface-hover: rgba(20, 30, 55, 0.1);
+  --border-subtle: rgba(20, 30, 55, 0.09);
+  --border-strong: rgba(20, 30, 55, 0.16);
+
+  --text-primary: #10141f;
+  --text-secondary: #4b546a;
+  --text-muted: #8991a6;
+  --text-on-brand: #04060b;
+
+  --shadow-soft: 0 8px 30px rgba(30, 40, 70, 0.1);
+  --shadow-elevated: 0 20px 60px rgba(30, 40, 70, 0.16);
+}

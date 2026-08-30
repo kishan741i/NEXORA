@@ -1,0 +1,55 @@
+/* ==========================================================================
+   NEXORA — Responsive
+   ========================================================================== */
+
+/* ---- Tablet ---- */
+@media (max-width: 1024px) {
+  .workspace { grid-template-columns: 1fr; }
+  .workspace-rail { position: static; }
+  .hero { grid-template-columns: 1fr; }
+  .hero-visual { max-width: 320px; margin-inline: auto; order: -1; }
+}
+
+/* ---- Below 900: switch to app shell ---- */
+@media (max-width: 900px) {
+  :root { --nav-height: 60px; --status-height: 34px; }
+
+  .nav-links { display: none; }
+  .mobile-only { display: flex; }
+  .search-trigger .search-label { display: none; }
+  .search-trigger { padding: 9px 11px; }
+
+  .bottom-nav { display: block; }
+  .app-shell { padding-bottom: calc(var(--bottom-nav-height) + var(--safe-bottom) + 16px); }
+
+  .hero { padding-top: 12px; }
+  .hero-actions .btn span.long { display: none; }
+
+  .grid-cards { grid-template-columns: 1fr; }
+
+  #demo-modal .modal,
+  #library-modal .modal {
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    max-height: none;
+    border-radius: 0;
+  }
+  .overlay { padding: 0; }
+  #search-modal .modal { margin-top: 0; height: 100%; max-height: none; border-radius: 0; }
+
+  .footer-row { flex-direction: column; align-items: flex-start; }
+}
+
+/* ---- Small phones ---- */
+@media (max-width: 420px) {
+  .container { padding-inline: 14px; }
+  .hero-stats { gap: 20px; }
+  .panel { padding: 16px; }
+  .bottom-nav-item span { font-size: 9.5px; }
+}
+
+/* ---- Large desktop ---- */
+@media (min-width: 1600px) {
+  :root { --max-width: 1680px; }
+}
