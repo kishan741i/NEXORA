@@ -67,7 +67,7 @@
   function renderHomeSnapshot() {
     const el = document.getElementById('home-library');
     if (!el) return;
-    el.innerHTML = NEXORA_DATA.library.slice(0, 4).map(cardHtml).join('');
+    el.innerHTML = NEXORA_DATA.library.slice(0, 7).map(cardHtml).join('');
     window.NexoraIcons.hydrate();
   }
 
