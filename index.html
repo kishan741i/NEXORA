@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Nexora — Learn · Build · Discover</title>
+<meta name="description" content="Nexora: a personal knowledge, learning, building and discovery hub." />
+
+<!-- No-flash theme init: must run before first paint -->
+<script>
+  (function () {
+    var saved = localStorage.getItem('nexora-theme');
+    var theme = saved === 'light' || saved === 'dark' ? saved : 'dark';
+    document.documentElement.setAttribute('data-theme', theme);
+  })();
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+
+<link rel="stylesheet" href="css/variables.css" />
+<link rel="stylesheet" href="css/base.css" />
+<link rel="stylesheet" href="css/layout.css" />
+<link rel="stylesheet" href="css/navigation.css" />
+<link rel="stylesheet" href="css/components.css" />
+<link rel="stylesheet" href="css/modals.css" />
+<link rel="stylesheet" href="css/animations.css" />
+<link rel="stylesheet" href="css/responsive.css" />
+</head>
+<body>
+
+<!-- ===================== BACKGROUND SYSTEM ===================== -->
+<div class="bg-system" aria-hidden="true">
+  <div class="bg-grid"></div>
+  <canvas id="particle-canvas"></canvas>
+</div>
+
+<!-- ===================== TOP NAVIGATION ===================== -->
+<header class="topnav">
+  <div class="topnav-inner">
+    <a href="#" class="brand" data-nav-target="home" aria-label="Nexora home">
+      <svg class="brand-mark" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="brandGrad" x1="2" y1="2" x2="38" y2="38" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#22d3ee"/>
+            <stop offset="0.5" stop-color="#38bdf8"/>
+            <stop offset="1" stop-color="#a78bfa"/>
+          </linearGradient>
+        </defs>
+        <circle cx="20" cy="8" r="4" fill="url(#brandGrad)"/>
+        <circle cx="8" cy="28" r="3.4" fill="url(#brandGrad)" opacity="0.85"/>
+        <circle cx="32" cy="28" r="3.4" fill="url(#brandGrad)" opacity="0.85"/>
+        <circle cx="20" cy="21" r="2.6" fill="url(#brandGrad)"/>
+        <path d="M20 12L20 21M20 21L8 28M20 21L32 28" stroke="url(#brandGrad)" stroke-width="1.6" stroke-linecap="round"/>
+      </svg>
+      <span class="brand-name">Nexora</span>
+    </a>
+
+    <nav class="nav-links" aria-label="Primary">
+      <a href="#" class="nav-link is-active" data-nav-target="home"><span class="idx" hidden>01</span>Home</a>
+      <a href="#learn" class="nav-link" data-nav-target="learn"><span class="idx" hidden>02</span>Learn</a>
+      <a href="#build" class="nav-link" data-nav-target="build"><span class="idx" hidden>03</span>Build</a>
+      <a href="#discover" class="nav-link" data-nav-target="discover"><span class="idx" hidden>04</span>Discover</a>
+      <a href="#library" class="nav-link" data-nav-target="library"><span class="idx" hidden>05</span>Library</a>
+    </nav>
+
+    <div class="nav-controls">
+      <button type="button" class="search-trigger" data-open-search aria-label="Open search">
+        <i data-lucide="search" class="icon"></i>
+        <span class="search-label">Search</span>
+        <kbd>&#8984;K</kbd>
+      </button>
+      <button type="button" class="btn-icon theme-toggle" data-theme-toggle aria-label="Toggle theme">
+        <i data-lucide="sun" class="icon icon-sun"></i>
+        <i data-lucide="moon" class="icon icon-moon"></i>
+      </button>
+      <button type="button" class="btn-icon mobile-only" id="menu-open-btn" aria-label="Open menu">
+        <i data-lucide="menu" class="icon"></i>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- ===================== STATUS BAR ===================== -->
+<div class="status-bar" aria-hidden="true">
+  <div class="status-bar-inner">
+    <span class="status-item"><span class="status-dot"></span>SYSTEM ONLINE</span>
+    <span class="status-sep">/</span>
+    <span class="status-item"><strong data-stat="visitors">0</strong> VISITORS</span>
+    <span class="status-sep">/</span>
+    <span class="status-item"><strong data-stat="projects">0</strong> PROJECTS</span>
+    <span class="status-sep">/</span>
+    <span class="status-item"><strong data-stat="documents">0</strong> DOCUMENTS</span>
+    <span class="status-sep">/</span>
+    <span class="status-item" data-stat="version">v8.0</span>
+  </div>
+</div>
+
+<!-- ===================== MOBILE FULLSCREEN MENU ===================== -->
+<div class="mobile-menu" id="mobile-menu" role="dialog" aria-modal="true" aria-hidden="true" aria-label="Navigation menu">
+  <div class="mobile-menu-head">
+    <span class="brand-name">Menu</span>
+    <button type="button" class="btn-icon" id="menu-close-btn" aria-label="Close menu"><i data-lucide="x" class="icon"></i></button>
+  </div>
+  <nav class="mobile-menu-links" aria-label="Mobile primary">
+    <a href="#" class="mobile-menu-link is-active" data-nav-target="home"><span class="idx">01</span>Home</a>
+    <a href="#learn" class="mobile-menu-link" data-nav-target="learn"><span class="idx">02</span>Learn</a>
+    <a href="#build" class="mobile-menu-link" data-nav-target="build"><span class="idx">03</span>Build</a>
+    <a href="#discover" class="mobile-menu-link" data-nav-target="discover"><span class="idx">04</span>Discover</a>
+    <a href="#library" class="mobile-menu-link" data-nav-target="library"><span class="idx">05</span>Library</a>
+  </nav>
+  <div class="mobile-menu-foot">
+    <button type="button" class="btn btn-ghost" data-theme-toggle><i data-lucide="moon" class="icon"></i>Theme</button>
+    <button type="button" class="btn btn-ghost" data-open-search><i data-lucide="search" class="icon"></i>Search</button>
+  </div>
+</div>
+
+<!-- ===================== APP SHELL ===================== -->
+<div class="app-shell">
+  <main class="container">
+
+    <!-- NOTICE -->
+    <div class="notice" id="system-notice" style="display:none;"></div>
+
+    <!-- =========== HOME VIEW =========== -->
+    <section class="view is-active" data-view="home">
+      <div class="hero">
+        <div class="hero-content">
+          <span class="hero-badge glass"><span class="dot"></span><span class="mono" style="font-size:11px;color:var(--text-secondary);">SYSTEM ONLINE</span></span>
+          <h1 class="display-xl">Learn. <span class="gradient-text">Build.</span> Discover.</h1>
+          <p class="hero-desc">Your personal space for knowledge, projects, resources and discovery — one workspace, always running.</p>
+          <div class="hero-actions">
+            <a href="#learn" class="btn btn-primary" data-nav-target="learn"><i data-lucide="compass" class="icon"></i>Explore Knowledge</a>
+            <a href="#build" class="btn btn-ghost" data-nav-target="build"><i data-lucide="hammer" class="icon"></i>View Projects</a>
+            <button type="button" class="btn btn-ghost" data-open-library><i data-lucide="library" class="icon"></i><span class="long">Open Library</span></button>
+          </div>
+          <div class="hero-stats">
+            <div class="hero-stat"><div class="num mono" data-stat="visitors">0</div><div class="label">VISITORS</div></div>
+            <div class="hero-stat"><div class="num mono" data-stat="projects">0</div><div class="label">PROJECTS</div></div>
+            <div class="hero-stat"><div class="num mono" data-stat="documents">0</div><div class="label">DOCUMENTS</div></div>
+          </div>
+        </div>
+        <div class="hero-visual" aria-hidden="true">
+          <canvas id="hero-canvas"></canvas>
+        </div>
+      </div>
+
+      <div class="workspace">
+        <div class="workspace-main">
+
+          <div class="panel glass">
+            <div class="panel-head">
+              <h2 class="section-title">Continue Learning</h2>
+              <a href="#learn" class="link-more" data-nav-target="learn">All subjects <i data-lucide="arrow-right" class="icon" style="width:14px;height:14px;"></i></a>
+            </div>
+            <div class="subject-scroll" id="subjects-row"></div>
+          </div>
+
+          <div class="panel glass">
+            <div class="panel-head">
+              <h2 class="section-title">Recent Projects</h2>
+              <a href="#build" class="link-more" data-nav-target="build">View all <i data-lucide="arrow-right" class="icon" style="width:14px;height:14px;"></i></a>
+            </div>
+            <div id="home-projects"></div>
+          </div>
+
+          <div class="panel glass">
+            <div class="panel-head">
+              <h2 class="section-title">E-Library Snapshot</h2>
+              <button type="button" class="link-more" data-open-library>Open Library <i data-lucide="arrow-right" class="icon" style="width:14px;height:14px;"></i></button>
+            </div>
+            <div id="home-library" style="display:flex;flex-direction:column;gap:2px;"></div>
+          </div>
+
+        </div>
+
+        <div class="workspace-rail">
+          <div>
+            <div class="panel-head" style="margin-bottom:10px;">
+              <h2 class="section-title">Discover</h2>
+            </div>
+            <div class="discover-card" id="home-discover"></div>
+          </div>
+
+          <div class="panel glass">
+            <div class="panel-head"><h2 class="section-title">Quick Links</h2></div>
+            <div id="quicklinks-list" style="display:flex;flex-direction:column;gap:2px;"></div>
+          </div>
+
+          <div class="panel glass">
+            <div class="panel-head"><h2 class="section-title">Activity</h2></div>
+            <div class="activity-list" id="activity-list"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========== LEARN VIEW =========== -->
+    <section class="view" data-view="learn">
+      <div class="page-head">
+        <span class="eyebrow">02 / Learn</span>
+        <h1 class="section-title" style="font-size:clamp(1.8rem,4vw,2.6rem);">Knowledge base</h1>
+        <p>Subjects, notes, references and everything you're actively studying — organized by topic, not by file type.</p>
+      </div>
+      <div class="grid-cards" id="learn-subjects-grid"></div>
+    </section>
+
+    <!-- =========== BUILD VIEW =========== -->
+    <section class="view" data-view="build">
+      <div class="page-head">
+        <span class="eyebrow">03 / Build</span>
+        <h1 class="section-title" style="font-size:clamp(1.8rem,4vw,2.6rem);">Project explorer</h1>
+        <p>Everything you've shipped, and everything still in progress.</p>
+      </div>
+      <div class="chip-row" id="build-filters" style="margin-bottom:20px;"></div>
+      <div id="build-grid"></div>
+    </section>
+
+    <!-- =========== DISCOVER VIEW =========== -->
+    <section class="view" data-view="discover">
+      <div class="page-head">
+        <span class="eyebrow">04 / Discover</span>
+        <h1 class="section-title" style="font-size:clamp(1.8rem,4vw,2.6rem);">Discover something new</h1>
+        <p>A rotating window into the wider web — knowledge, tools and places worth knowing about.</p>
+      </div>
+      <div class="discover-card" id="discover-workspace" style="max-width:720px;"></div>
+    </section>
+
+    <!-- =========== LIBRARY VIEW =========== -->
+    <section class="view" data-view="library">
+      <div class="page-head">
+        <span class="eyebrow">05 / Library</span>
+        <h1 class="section-title" style="font-size:clamp(1.8rem,4vw,2.6rem);">E-Library</h1>
+        <p>Search and filter every document, note and resource in one place.</p>
+        <button type="button" class="btn btn-primary" id="library-page-open" style="margin-top:18px;"><i data-lucide="library" class="icon"></i>Open Library</button>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer container">
+    <div class="footer-row">
+      <div class="footer-brand">
+        <span class="brand-name" style="font-size:14px;">Nexora</span>
+        <span class="text-muted" style="font-size:12px;">Learn &middot; Build &middot; Discover</span>
+      </div>
+      <nav class="footer-links" aria-label="Footer">
+        <a href="https://github.com/kishan741i" target="_blank" rel="noopener noreferrer">GitHub</a>
+        <button type="button" data-open-library>Library</button>
+        <a href="#home" data-nav-target="home">About</a>
+        <a href="https://github.com/kishan741i/NEXORA/assets/nexora.apk" target="_blank" rel="noopener noreferrer">Download</a>
+      </nav>
+      <span class="footer-meta" data-stat="version">v8.0</span>
+    </div>
+  </footer>
+</div>
+
+<!-- ===================== BOTTOM NAV (mobile) ===================== -->
+<nav class="bottom-nav" aria-label="Mobile primary">
+  <div class="bottom-nav-inner">
+    <a href="#" class="bottom-nav-item is-active" data-nav-target="home"><i data-lucide="home" class="icon"></i><span>Home</span></a>
+    <a href="#learn" class="bottom-nav-item" data-nav-target="learn"><i data-lucide="graduation-cap" class="icon"></i><span>Learn</span></a>
+    <a href="#build" class="bottom-nav-item" data-nav-target="build"><i data-lucide="hammer" class="icon"></i><span>Build</span></a>
+    <a href="#discover" class="bottom-nav-item" data-nav-target="discover"><i data-lucide="compass" class="icon"></i><span>Discover</span></a>
+    <a href="#library" class="bottom-nav-item" data-nav-target="library"><i data-lucide="library" class="icon"></i><span>Library</span></a>
+  </div>
+</nav>
+
+<!-- ===================== SEARCH MODAL ===================== -->
+<div class="overlay" id="search-modal" role="dialog" aria-modal="true" aria-hidden="true" aria-label="Search">
+  <div class="modal">
+    <div class="cmdk-input-row">
+      <i data-lucide="search" class="icon"></i>
+      <input type="text" id="cmdk-input" placeholder="Search anything..." data-autofocus aria-label="Search Nexora" />
+      <kbd>ESC</kbd>
+    </div>
+    <div class="cmdk-results" id="cmdk-results"></div>
+  </div>
+</div>
+
+<!-- ===================== LIBRARY MODAL ===================== -->
+<div class="overlay" id="library-modal" role="dialog" aria-modal="true" aria-hidden="true" aria-label="E-Library">
+  <div class="modal">
+    <div class="modal-header">
+      <div>
+        <h2>E-Library</h2>
+        <div class="modal-sub">Search your knowledge</div>
+      </div>
+      <button type="button" class="btn-icon" data-close-modal aria-label="Close library"><i data-lucide="x" class="icon"></i></button>
+    </div>
+    <div class="modal-body">
+      <div class="library-toolbar">
+        <div class="search-field">
+          <i data-lucide="search" class="icon"></i>
+          <input type="text" id="lib-search-input" placeholder="Search your knowledge..." data-autofocus aria-label="Search library" />
+        </div>
+        <div class="chip-row" id="lib-filters"></div>
+        <span class="result-count" id="lib-count">0 FILES</span>
+      </div>
+      <div class="lib-results" id="lib-results"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== LIVE DEMO MODAL ===================== -->
+<div class="overlay" id="demo-modal" role="dialog" aria-modal="true" aria-hidden="true" aria-label="Live demo">
+  <div class="modal">
+    <div class="modal-header">
+      <h2 id="demo-title">Live Demo</h2>
+      <div style="display:flex;gap:8px;">
+        <button type="button" class="btn-icon" id="demo-close-btn" data-close-modal aria-label="Close demo"><i data-lucide="x" class="icon"></i></button>
+      </div>
+    </div>
+    <div class="modal-body">
+      <div class="demo-frame-wrap" id="demo-frame-wrap"></div>
+    </div>
+  </div>
+</div>
+
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+<script src="js/data.js"></script>
+<script src="js/icons.js"></script>
+<script src="js/theme.js"></script>
+<script src="js/modal.js"></script>
+<script src="js/navigation.js"></script>
+<script src="js/projects.js"></script>
+<script src="js/library.js"></script>
+<script src="js/discover.js"></script>
+<script src="js/search.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
