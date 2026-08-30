@@ -1,4 +1,4 @@
-# Homepage of profile that show all projects &amp; resources.
+ Homepage of profile that show all projects &amp; resources.
 # 🌌 NEXORA — Learn. Build. Discover.
 
 **NEXORA** is my personal web portal where I keep my projects, learning resources, experiments, and useful links in one place.
