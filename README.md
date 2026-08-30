@@ -17,7 +17,7 @@ It is built around three simple ideas:
 NEXORA is more than a portfolio. It's a small digital space where I can share what I'm learning, the things I'm building, and the ideas I'm exploring.
 
 <p align="center">
-  <img src="assets/nexora-preview.png" alt="NEXORA Website Preview" width="900">
+  <img src="assets/preview.png" alt="NEXORA Website Preview" width="900">
 </p>
 
 ### 📚 Learn
