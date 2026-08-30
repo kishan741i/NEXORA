@@ -60,7 +60,7 @@ const NEXORA_DATA = {
       name: "3DModel",
       description: "Interactive 3D model viewer and renderer built for the web.",
       category: "Graphics",
-      tech: ["JavaScript", "WebGL", "Three.js" "HTML", "CSS"],
+      tech: ["JavaScript", "WebGL", "Three.js", "HTML", "CSS"],
       status: "live",
       updated: "Recent",
       github: "https://github.com/kishan741i/3d-model",
