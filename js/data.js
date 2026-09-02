@@ -115,7 +115,7 @@ const NEXORA_DATA = {
       name: "Study Vault",
       description: "BCA study resources easier to discover and access.",
       category: "Web",
-      tech: ["HTML", "CSS", "JavaScript"],
+      tech: ["React JS", "Vite", "TypeScript", "Tailwind CSS"],
       status: "live",
       updated: "In progress",
       github: "https://github.com/kishan741i/first-project/tree/gh-pages",
