@@ -109,6 +109,17 @@ const NEXORA_DATA = {
       updated: "In progress",
       github: "https://github.com/kishan741i/news-site/tree/master",
       demo: "",
+    },
+     {
+      id: "study-vault",
+      name: "Study Vault",
+      description: "BCA study resources easier to discover and access.",
+      category: "Web",
+      tech: ["HTML", "CSS", "JavaScript"],
+      status: "live",
+      updated: "In progress",
+      github: "https://github.com/kishan741i/first-project/tree/gh-pages",
+      demo: "https://kishan741i.github.io/first-project",
     }
   ],
 
